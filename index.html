@@ -1,0 +1,919 @@
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículo – Júlio César Zadi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --card: #151b22;
+      --border: #1e2830;
+      --accent: #00e5a0;
+      --accent2: #00aaff;
+      --accent3: #7c3aed;
+      --text: #e8edf2;
+      --muted: #6b7f91;
+      --muted2: #8fa3b5;
+      --heading: #ffffff;
+      --font-display: 'Syne', 'Segoe UI', Arial, sans-serif;
+      --font-mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .55;
+    }
+
+    /* ── GRID LINES BG ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,160,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,.022) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 32px 80px;
+    }
+
+    /* ════════════════════════════════
+      HEADER
+    ════════════════════════════════ */
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+      animation: fadeUp .7s ease both;
+    }
+
+    .header-left { display: flex; flex-direction: column; gap: 10px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,229,160,.08);
+      border: 1px solid rgba(0,229,160,.25);
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      width: fit-content;
+      font-weight: 500;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800;
+      color: var(--heading);
+      letter-spacing: -.02em;
+      line-height: 1.1;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    /* ── CONTACT CHIPS ── */
+    .contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      font-size: 11.5px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      transition: border-color .2s, color .2s;
+      cursor: default;
+    }
+
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .chip svg { flex-shrink: 0; opacity: .65; }
+
+    /* ── AVATAR — fixed spinning ring ── */
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Outer wrapper spins the conic gradient */
+    .avatar-outer {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 4s linear infinite;
+      flex-shrink: 0;
+    }
+
+    /* Inner circle masks everything cleanly — NO overflow hidden needed */
+    .avatar-inner {
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-initials {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      /* prevent gradient clipping issues */
+      padding: 2px;
+    }
+
+    .age-tag {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════
+      GRID LAYOUT
+    ════════════════════════════════ */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .col-full { grid-column: 1 / -1; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      height: 100%;
+      position: relative;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+
+    /* Top shine line — inside card so no overflow issue */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,160,.4), transparent);
+      border-radius: 1px;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .card:hover {
+      border-color: rgba(0,229,160,.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    /* Section animations — applied individually, no nth-child conflicts */
+    .anim-1 { animation: fadeUp .6s .05s ease both; }
+    .anim-2 { animation: fadeUp .6s .12s ease both; }
+    .anim-3 { animation: fadeUp .6s .18s ease both; }
+    .anim-4 { animation: fadeUp .6s .24s ease both; }
+    .anim-5 { animation: fadeUp .6s .30s ease both; }
+    .anim-6 { animation: fadeUp .6s .36s ease both; }
+    .anim-7 { animation: fadeUp .6s .42s ease both; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-label svg { flex-shrink: 0; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ════════════════════════════════
+      OBJETIVO
+    ════════════════════════════════ */
+    .objetivo-text {
+      color: var(--muted2);
+      font-size: 13px;
+      line-height: 1.85;
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+    }
+
+    /* ════════════════════════════════
+      FORMAÇÃO
+    ════════════════════════════════ */
+    .edu-degree {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 4px;
+    }
+
+    .edu-institution {
+      color: var(--muted2);
+      font-size: 12.5px;
+      margin-bottom: 10px;
+    }
+
+    .edu-period {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      color: var(--accent);
+      background: rgba(0,229,160,.08);
+      border: 1px solid rgba(0,229,160,.2);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+
+    /* ════════════════════════════════
+      SKILLS LIST
+    ════════════════════════════════ */
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skills-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--muted2);
+      transition: color .2s;
+      line-height: 1.4;
+    }
+
+    .skills-list li:hover { color: var(--text); }
+
+    .skills-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(0,229,160,.5);
+    }
+
+    /* ════════════════════════════════
+      TECH TAGS
+    ════════════════════════════════ */
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 11.5px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      color: var(--muted2);
+      transition: all .2s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      background: rgba(0,229,160,.08);
+      border-color: rgba(0,229,160,.3);
+      color: var(--accent);
+    }
+
+    .tag.learning {
+      border-color: rgba(0,170,255,.25);
+      color: var(--accent2);
+      background: rgba(0,170,255,.06);
+    }
+
+    /* ════════════════════════════════
+      PROJETO
+    ════════════════════════════════ */
+    .project-card {
+      background: linear-gradient(135deg, rgba(0,229,160,.04), rgba(0,170,255,.03));
+      border-color: rgba(0,229,160,.18);
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      color: var(--muted2);
+      font-size: 12.5px;
+      line-height: 1.85;
+    }
+
+    /* ════════════════════════════════
+      QUALIFICAÇÕES
+    ════════════════════════════════ */
+    .qual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .qual-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted2);
+      transition: color .2s;
+    }
+
+    .qual-item:hover { color: var(--text); }
+
+    .qual-dot {
+      width: 4px; height: 4px;
+      background: var(--accent2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 5px rgba(0,170,255,.5);
+    }
+
+    /* ════════════════════════════════
+      IDIOMA
+    ════════════════════════════════ */
+    .lang-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .lang-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .lang-level {
+      font-size: 10.5px;
+      color: var(--accent2);
+      background: rgba(0,170,255,.08);
+      border: 1px solid rgba(0,170,255,.2);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .lang-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden; /* safe here — contains the fill bar */
+    }
+
+    /* FIX: width stays 100%, scaleX controls the fill level (30% = básico/intermediário) */
+    .lang-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      border-radius: 2px;
+      transform: scaleX(0.30);
+      transform-origin: left;
+      animation: barFill 1.4s .6s ease both;
+    }
+
+    .lang-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ════════════════════════════════
+      CURSOS COMPLEMENTARES
+    ════════════════════════════════ */
+    .course-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-inline {
+      font-size: 10px;
+      color: var(--accent2);
+      font-family: var(--font-mono);
+      font-weight: 400;
+      background: rgba(0,170,255,.08);
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,170,255,.2);
+    }
+
+    .course-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .course-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted2);
+      transition: color .2s;
+    }
+
+    .course-item:hover { color: var(--text); }
+
+    .course-item::before {
+      content: '//';
+      color: var(--accent3);
+      font-weight: 500;
+      flex-shrink: 0;
+      opacity: .8;
+    }
+
+    /* ════════════════════════════════
+      INFO ADICIONAL
+    ════════════════════════════════ */
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--muted2);
+      line-height: 1.5;
+    }
+
+    .info-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ════════════════════════════════
+      SPACER CARD (fills grid gap)
+    ════════════════════════════════ */
+    .spacer-card { margin-bottom: 20px; }
+
+    /* ════════════════════════════════
+      FOOTER
+    ════════════════════════════════ */
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      animation: fadeUp .6s .48s ease both;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-text {
+      font-size: 10.5px;
+      color: var(--muted);
+      letter-spacing: .05em;
+    }
+
+    .dot-sep {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .footer-year {
+      font-size: 10.5px;
+      color: var(--accent);
+      opacity: .55;
+      letter-spacing: .06em;
+    }
+
+    /* ════════════════════════════════
+      ANIMATIONS
+    ════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .4; transform: scale(.75); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes barFill {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(0.30); }
+    }
+
+    /* ════════════════════════════════
+      RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 660px) {
+      .grid-2            { grid-template-columns: 1fr; }
+      .col-full          { grid-column: 1; }
+      header             { grid-template-columns: 1fr; }
+      .header-right      { display: none; }
+      .qual-grid         { grid-template-columns: 1fr; }
+      .page              { padding: 32px 16px 60px; }
+      .spacer-card       { margin-bottom: 0; }
+    }
+  </style>
+  </head>
+  <body>
+  <div class="page">
+
+    <!-- ════ HEADER ════ -->
+    <header>
+      <div class="header-left">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Disponível para Estágio / Jovem Aprendiz
+        </div>
+        <h1>Júlio César<br><span>Zadi de Assis</span></h1>
+        <p class="subtitle">Desenvolvedor em Formação &nbsp;·&nbsp; Campo Grande, MS</p>
+        <div class="contacts">
+          <div class="chip">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            (67) 99807-2897
+          </div>
+          <div class="chip">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            zadijuliocesar@outlook.com
+          </div>
+          <div class="chip">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Campo Grande – MS
+          </div>
+        </div>
+      </div>
+
+      <!-- AVATAR: outer rotates, inner is static fill — no overflow:hidden bug -->
+      <div class="header-right">
+        <div class="avatar-outer">
+          <div class="avatar-inner">
+            <div class="avatar-initials">JC</div>
+          </div>
+        </div>
+        <span class="age-tag">18 anos</span>
+      </div>
+    </header>
+
+    <!-- ════ GRID ════ -->
+    <div class="grid-2">
+
+      <!-- OBJETIVO -->
+      <section class="col-full anim-1">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+            </svg>
+            <span class="section-title">Objetivo</span>
+            <div class="section-line"></div>
+          </div>
+          <p class="objetivo-text">
+            Busco oportunidade de <strong style="color:var(--text)">estágio</strong> ou <strong style="color:var(--text)">jovem aprendiz</strong> na área de tecnologia, com o objetivo de desenvolver experiência prática, aprimorar meus conhecimentos e evoluir profissionalmente como desenvolvedor de software.
+          </p>
+        </div>
+      </section>
+
+      <!-- FORMAÇÃO -->
+      <section class="anim-2">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <span class="section-title">Formação</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="edu-degree">Análise e Desenvolvimento de Sistemas</div>
+          <div class="edu-institution">Insted – Campo Grande / MS</div>
+          <div class="edu-period">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 11H7v-2h4V7h2v6z"/>
+            </svg>
+            2025 – Atual &nbsp;(cursando)
+          </div>
+        </div>
+      </section>
+
+      <!-- IDIOMAS -->
+      <section class="anim-2">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <path d="M2 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/>
+              <path d="M3 9c0 2.144 2.952 3.908 7 4"/>
+              <path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/>
+            </svg>
+            <span class="section-title">Idiomas</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="lang-entry">
+            <span class="lang-name">Inglês</span>
+            <span class="lang-level">Básico / Intermediário</span>
+          </div>
+          <div class="lang-bar">
+            <div class="lang-fill"></div>
+          </div>
+          <p class="lang-note">em aprendizado contínuo</p>
+        </div>
+      </section>
+
+      <!-- HABILIDADES TÉCNICAS -->
+      <section class="col-full anim-3">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span class="section-title">Habilidades Técnicas</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="tech-tags">
+            <span class="tag learning">Python ✦ em aprendizado</span>
+            <span class="tag">Lógica de Programação</span>
+            <span class="tag">Estrutura de Dados</span>
+            <span class="tag">POO</span>
+            <span class="tag">Banco de Dados</span>
+            <span class="tag">Desenvolvimento Web</span>
+            <span class="tag">Pacote Office</span>
+            <span class="tag">Windows Intermediário / Avançado</span>
+            <span class="tag">Scrum / Ágil</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONHECIMENTOS -->
+      <section class="anim-4">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            <span class="section-title">Principais Conhecimentos</span>
+            <div class="section-line"></div>
+          </div>
+          <ul class="skills-list">
+            <li>Lógica de Programação e Pensamento Computacional</li>
+            <li>Estrutura de Dados</li>
+            <li>Programação Orientada a Objetos</li>
+            <li>Engenharia de Software</li>
+            <li>Engenharia de Requisitos e Design de Sistemas</li>
+            <li>Modelagem e Design de Banco de Dados</li>
+            <li>Desenvolvimento Web Full Stack</li>
+            <li>Gestão Ágil de Projetos (Scrum)</li>
+            <li>Estatística e Análise de Dados</li>
+            <li>Matemática Computacional</li>
+            <li>UX / UI – Experiência do Usuário</li>
+            <li>Fundamentos de Redes</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- QUALIFICAÇÕES + INFO ADICIONAL (stacked in same grid cell) -->
+      <section class="anim-4" style="display:flex; flex-direction:column; gap:20px;">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+            <span class="section-title">Qualificações</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="qual-grid">
+            <div class="qual-item"><div class="qual-dot"></div>Facilidade de aprendizado</div>
+            <div class="qual-item"><div class="qual-dot"></div>Organização e disciplina</div>
+            <div class="qual-item"><div class="qual-dot"></div>Raciocínio lógico</div>
+            <div class="qual-item"><div class="qual-dot"></div>Boa comunicação</div>
+            <div class="qual-item"><div class="qual-dot"></div>Trabalho em equipe</div>
+            <div class="qual-item"><div class="qual-dot"></div>Proatividade</div>
+            <div class="qual-item"><div class="qual-dot"></div>Comprometimento</div>
+            <div class="qual-item"><div class="qual-dot"></div>Foco em resultados</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span class="section-title">Informações Adicionais</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="info-list">
+            <div class="info-item">
+              <svg class="info-icon" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Disponibilidade para atuar no período diurno
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+              Interesse em desenvolvimento de software e tecnologia
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>
+              </svg>
+              Foco em crescimento profissional na área de TI
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJETO ACADÊMICO -->
+      <section class="col-full anim-5">
+        <div class="card project-card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <span class="section-title">Projeto Acadêmico</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="project-name">Projeto Integrador I</div>
+          <p class="project-desc">
+            Desenvolvimento de sistema acadêmico em equipe, aplicando conceitos de programação, engenharia de software, organização de projetos e modelagem de sistemas. Experiência prática com metodologias de desenvolvimento colaborativo e entrega de soluções tecnológicas.
+          </p>
+        </div>
+      </section>
+
+      <!-- CURSOS COMPLEMENTARES -->
+      <section class="col-full anim-6">
+        <div class="card">
+          <div class="section-label">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            </svg>
+            <span class="section-title">Cursos Complementares</span>
+            <div class="section-line"></div>
+          </div>
+          <div class="course-name">
+            Fundamentos de Python
+            <span class="badge-inline">em andamento</span>
+          </div>
+          <div class="course-list">
+            <div class="course-item">Variáveis, tipos de dados e operadores</div>
+            <div class="course-item">Estruturas condicionais e loops</div>
+            <div class="course-item">Listas, dicionários e funções</div>
+            <div class="course-item">Manipulação de dados</div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /grid-2 -->
+
+    <!-- ════ FOOTER ════ -->
+    <footer>
+      <div class="footer-left">
+        <span class="footer-text">Júlio César Zadi de Assis dos Santos</span>
+        <div class="dot-sep"></div>
+        <span class="footer-text">18 anos</span>
+        <div class="dot-sep"></div>
+        <span class="footer-text">Campo Grande – MS</span>
+      </div>
+      <span class="footer-year">2025</span>
+    </footer>
+
+  </div>
+  </body>
+  </html>
